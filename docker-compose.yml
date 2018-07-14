@@ -5,16 +5,23 @@ services:
     # dockerfile location 
     build: . 
     ports: 
-      - "8080:80"
+      - "50080:50080"
+      - "50022:50022"
     volumes:
-      - ./sites:/var/sites    
-    networks:
-      testing_net:
-        ipv4_address: 192.168.100.200
+      - ./sites:/var/sites
+    network_mode: host
+    #dns:
+    # - 8.8.8.8
+    # - 8.8.4.4    
+    #networks:
+    #  testing_net:
+    #    ipv4_address: 192.168.2.200
 
-networks:
-  testing_net:
-    ipam:
-      driver: default
-      config:
-        - subnet: 192.168.100.1/24
+#networks:
+#  testing_net:
+#    driver: bridge
+#    ipam:
+#      driver: default
+#      config:
+#        - subnet: 255.255.255.0
+#          gateway: 192.168.2.1 

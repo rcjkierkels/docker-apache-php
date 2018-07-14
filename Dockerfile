@@ -2,7 +2,6 @@ FROM php:7.2.7-apache-stretch
 
 LABEL maintainer="Roland Kierkels"
 
-COPY index.php /var/www/html
 COPY config/php/php.ini /usr/local/etc/php/ 
 
 # ----------------------------------------------------
@@ -13,7 +12,8 @@ RUN apt-get update \
 		net-tools \
 		openssh-server \
 		nano \
-		cron
+		cron \
+                iputils-ping
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -34,7 +34,14 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # ----------------------------------------------------
 #  Configure Apache
 # ----------------------------------------------------
+RUN sed -i "s/Listen 80/Listen 50080/" /etc/apache2/ports.conf
+RUN sed -i "s/Listen 443/Listen 50443/" /etc/apache2/ports.conf
 RUN a2enmod rewrite
+RUN rm /etc/apache2/sites-enabled/*
+RUN rm /etc/apache2/sites-available/*
+COPY config/apache2/vhost/* /etc/apache2/sites-available/
+RUN cd /etc/apache2/sites-available;a2ensite *;
+RUN service apache2 restart
 
 # ----------------------------------------------------
 #  Configure OPENSSH server
@@ -46,6 +53,8 @@ RUN echo "deployhq:test123" | chpasswd
 # Set default shell for new user
 RUN usermod --shell /bin/bash deployhq
 RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+RUN sed -i 's/#Port 22/Port 50022/' /etc/ssh/sshd_config
 
 # SSH login fix. Otherwise user is kicked off after login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
