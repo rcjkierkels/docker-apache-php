@@ -13,7 +13,7 @@ RUN apt-get update \
 		openssh-server \
 		nano \
 		cron \
-                iputils-ping
+        iputils-ping
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -37,6 +37,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN sed -i "s/Listen 80/Listen 50080/" /etc/apache2/ports.conf
 RUN sed -i "s/Listen 443/Listen 50443/" /etc/apache2/ports.conf
 RUN a2enmod rewrite
+RUN a2enmod vhost_alias
 RUN rm /etc/apache2/sites-enabled/*
 RUN rm /etc/apache2/sites-available/*
 COPY config/apache2/vhost/* /etc/apache2/sites-available/
