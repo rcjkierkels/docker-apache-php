@@ -74,6 +74,5 @@ RUN sed -i 's/#Port 22/Port 50022/' /etc/ssh/sshd_config
 # SSH login fix. Otherwise user is kicked off after login
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
-# Make sure ssh server is started after boot
-CMD ["/usr/sbin/sshd", "-D"]
+# Scripts that should be started after build completed
 CMD ["/sbin/entrypoint.sh"]
