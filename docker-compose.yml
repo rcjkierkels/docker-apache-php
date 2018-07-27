@@ -9,6 +9,7 @@ services:
       - "50022:50022"
     volumes:
       - ./sites:/var/sites
+      - ./logs:/var/logs
     #network_mode: host
     #dns:
     # - 8.8.8.8
