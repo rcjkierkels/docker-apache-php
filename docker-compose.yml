@@ -7,8 +7,8 @@ services:
     ports: 
       - "50080:50080"
       - "50022:50022"
-    volumes:
-      - ./sites:/var/sites
+    #volumes:
+    #  - ./sites:/var/sites
     #network_mode: host
     #dns:
     # - 8.8.8.8
