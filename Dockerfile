@@ -53,7 +53,7 @@ RUN pecl install xdebug-2.6.0 \
 # ----------------------------------------------------
 RUN mkdir /mnt/synology-kierkels
 RUN echo "192.168.2.100:/volume1/vm/noveesoft /mnt/synology-kierkels nfs rw,async,hard,intr,noexec 0 0" >> /etc/fstab
-RUN mount 192.168.2.100:/volume1/vm/noveesoft /mnt/synology-kierkels
+#RUN mount 192.168.2.100:/volume1/vm/noveesoft /mnt/synology-kierkels
 RUN ln -s /mnt/synology-kierkels/sites /var/sites
 
 # ----------------------------------------------------
