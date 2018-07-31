@@ -1,4 +1,4 @@
-version: "2" 
+version: "3.2" 
 services:
   # name container/service 
   noveesoft-apache-php:
@@ -7,8 +7,9 @@ services:
     ports: 
       - "50080:50080"
       - "50022:50022"
-    #volumes:
-    #  - ./sites:/var/sites
+    volumes:
+      - /var/www:/mnt/synology-kierkels
+      #- "nfsmountCC:/mnt/synology-kierkels"
     #network_mode: host
     #dns:
     # - 8.8.8.8
@@ -16,6 +17,14 @@ services:
     #networks:
     #  testing_net:
     #    ipv4_address: 192.168.2.200
+
+#volumes:
+#  nfsmountCC:
+#    driver: local
+#    driver_opts:
+#      type: nfs
+#      o: "addr=192.168.2.200"
+#      device: ":/volume1/vm/noveesoft/"
 
 #networks:
 #  testing_net:

@@ -3,4 +3,4 @@ docker-compose rm
 docker-compose build --no-cache
 docker-compose up -d
 docker ps
-docker exec -it docker_noveesoft-apache-php_1 bash
+docker exec -it httpd_noveesoft-apache-php_1 bash

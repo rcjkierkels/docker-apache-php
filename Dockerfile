@@ -17,7 +17,7 @@ RUN apt-get update \
 		cron \
         iputils-ping \
         git \
-        nfs-common \
+        #nfs-common \
 
         # required for PHP extension zip
         zlib1g-dev \
@@ -51,10 +51,10 @@ RUN pecl install xdebug-2.6.0 \
 # ----------------------------------------------------
 #  Mounts
 # ----------------------------------------------------
-RUN mkdir /mnt/synology-kierkels
-RUN echo "192.168.2.100:/volume1/vm/noveesoft /mnt/synology-kierkels nfs rw,async,hard,intr,noexec 0 0" >> /etc/fstab
+#RUN mkdir /mnt/synology-kierkels
+#RUN echo "192.168.2.100:/volume1/vm/noveesoft /mnt/synology-kierkels nfs rw,async,hard,intr,noexec 0 0" >> /etc/fstab
 #RUN mount 192.168.2.100:/volume1/vm/noveesoft /mnt/synology-kierkels
-RUN ln -s /mnt/synology-kierkels/sites /var/sites
+#RUN ln -s /mnt/synology-kierkels/sites /var/sites
 
 # ----------------------------------------------------
 #  Configure Apache
@@ -85,4 +85,5 @@ RUN sed -i 's/#Port 22/Port 50022/' /etc/ssh/sshd_config
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
 # Scripts that should be started after build completed
+RUN ["chmod","+x","/sbin/entrypoint.sh"]
 CMD ["/sbin/entrypoint.sh"]
