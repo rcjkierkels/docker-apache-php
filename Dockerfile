@@ -49,7 +49,7 @@ RUN pecl install xdebug-2.6.0 \
     && docker-php-ext-enable xdebug
 
 # ----------------------------------------------------
-#  Mounts
+#  All Mounts
 # ----------------------------------------------------
 #RUN mkdir /mnt/synology-kierkels
 #RUN echo "192.168.2.100:/volume1/vm/noveesoft /mnt/synology-kierkels nfs rw,async,hard,intr,noexec 0 0" >> /etc/fstab
