@@ -17,8 +17,7 @@ RUN apt-get update \
 		cron \
         iputils-ping \
         git \
-        #nfs-common \
-
+        nfs-common \
         # required for PHP extension zip
         zlib1g-dev \
         # required for PHP extension ftp
@@ -38,9 +37,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # ----------------------------------------------------
 #  Install PHP Extensions
 # ----------------------------------------------------
-RUN docker-php-ext-install pdo_mysql bcmath calendar ctype zip ftp curl dba dom json posix session exif fileinfo tokenizer
+RUN docker-php-ext-install pdo_mysql bcmath calendar ctype zip ftp curl dba dom json posix session exif fileinfo tokenizer mysqli
 #enchant fileinfo filter ftp gd gettext gmp hash iconv imap interbase intl \
-#ldap mbstring mysqli oci8 odbc opcache pcntl pdo pdo_dblib pdo_firebird pdo_oci pdo_odbc pdo_pgsql pdo_sqlite pgsql phar \
+#ldap mbstrin oci8 odbc opcache pcntl pdo pdo_dblib pdo_firebird pdo_oci pdo_odbc pdo_pgsql pdo_sqlite pgsql phar \
 #pspell recode reflection shmop simplexml snmp soap sockets spl standard sysvmsg \
 #sysvsem sysvshm tidy wddx xml xmlreader xmlrpc xmlwriter xsl
 
@@ -51,14 +50,16 @@ RUN pecl install xdebug-2.6.0 \
 # ----------------------------------------------------
 #  All Mounts
 # ----------------------------------------------------
-#RUN mkdir /mnt/synology-kierkels
+RUN mkdir /mnt/synology-kierkels
 #RUN echo "192.168.2.100:/volume1/vm/noveesoft /mnt/synology-kierkels nfs rw,async,hard,intr,noexec 0 0" >> /etc/fstab
 #RUN mount 192.168.2.100:/volume1/vm/noveesoft /mnt/synology-kierkels
-#RUN ln -s /mnt/synology-kierkels/sites /var/sites
+RUN ln -s /mnt/synology-kierkels/sites /var/sites
 
 # ----------------------------------------------------
 #  Configure Apache
 # ----------------------------------------------------
+RUN rm -rf /var/log/apache2/error.log
+RUN rm -rf /var/log/apache2/access.log
 RUN sed -i "s/Listen 80/Listen 50080/" /etc/apache2/ports.conf
 RUN sed -i "s/Listen 443/Listen 50443/" /etc/apache2/ports.conf
 RUN a2enmod rewrite

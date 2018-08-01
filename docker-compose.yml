@@ -6,9 +6,10 @@ services:
     build: . 
     ports: 
       - "50080:50080"
+      - "50443:50443"
       - "50022:50022"
     volumes:
-      - /var/www:/mnt/synology-kierkels
+      - /mnt/synology-kierkels:/mnt/synology-kierkels
       #- "nfsmountCC:/mnt/synology-kierkels"
     #network_mode: host
     #dns:
